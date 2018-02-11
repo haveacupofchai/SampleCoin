@@ -3,9 +3,11 @@
 #include <cstring>
 
 void Block::CalculateHash() {
-	char *cstr = new char[contents.length() + 1];
+	char *cstr = new char[GetBlockLength()];
 	strcpy(cstr, contents.c_str());
 	strcat(cstr,to_string(nonce).c_str());
+	strcat(cstr,timestamp);
+
 	string contentsHash = SHA256(cstr);
 	delete cstr;
 
@@ -19,6 +21,11 @@ void Block::CalculateHash() {
 
 string Block::GetHash() {
 	return hashOfBlock;
+}
+
+int Block::GetBlockLength()
+{
+	return contents.length() + sizeof(nonce) + sizeof(timestamp);
 }
 
 void Block::MineBlock(uint32_t nDifficulty) {

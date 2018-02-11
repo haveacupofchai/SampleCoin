@@ -19,16 +19,30 @@ Blockchain::~Blockchain() {
 
 }
 
-void Blockchain::AddBlock(string content)
+bool Blockchain::AddBlock(fstream * _pInfile)
 {
-	Block *newBlock = new Block(_GetLastBlock().GetHash(), content);
+	if (_pInfile == nullptr)
+	{
+		return false;
+	}
+
+    string fileStr;
+    *_pInfile >> fileStr;
+
+#ifdef DBG
+    std::cout << fileStr << "\n";
+#endif
+
+	Block *newBlock = new Block(GetLastBlock().GetHash(), fileStr);
 	newBlock->MineBlock(difficulty);
 	chain.push_back(*newBlock);
+
+	return true;
 }
 
 
 
-Block Blockchain::_GetLastBlock() const
+Block Blockchain::GetLastBlock() const
 {
     return chain.back();
 }
