@@ -5,6 +5,7 @@
 void Block::CalculateHash() {
 	char *cstr = new char[contents.length() + 1];
 	strcpy(cstr, contents.c_str());
+	strcat(cstr,to_string(nonce).c_str());
 	string contentsHash = SHA256(cstr);
 	delete cstr;
 
@@ -18,4 +19,21 @@ void Block::CalculateHash() {
 
 string Block::GetHash() {
 	return hashOfBlock;
+}
+
+void Block::MineBlock(uint32_t nDifficulty) {
+    char cstr[nDifficulty + 1];
+    for (uint32_t i = 0; i < nDifficulty; ++i) {
+        cstr[i] = '0';
+    }
+    cstr[nDifficulty] = '\0';
+
+    string str(cstr);
+
+do {
+	nonce++;
+    CalculateHash();
+} while (GetHash().substr(0, nDifficulty) != str);
+
+cout << "Block mined: " << hashOfBlock << endl;
 }

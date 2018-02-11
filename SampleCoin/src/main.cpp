@@ -1,11 +1,15 @@
-#include "Block.h"
+#include "Blockchain.h"
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 
 int main() {
-	Block *firstBlock = new Block("", "First Block");
-	firstBlock->CalculateHash();
-	cout << "Hash of new block is : " << firstBlock->GetHash() << endl;
+
+	// Create Blockchain with difficulty 3
+    Blockchain bChain = Blockchain(3);
+
+    bChain.AddBlock("Second Block");
+    bChain.AddBlock("Third Block");
+
 }
