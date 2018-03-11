@@ -1,26 +1,26 @@
 #include "Block.h"
-#include "sha256.h"
-#include <cstring>
-
-void Block::CalculateHash() {
+void Block::CalculateHashOfBlock() {
 	char *cstr = new char[GetBlockLength()];
 	strcpy(cstr, contents.c_str());
-	strcat(cstr,to_string(nonce).c_str());
-	strcat(cstr,timestamp);
+	strcat(cstr, to_string(nonce).c_str());
+	strcat(cstr, timestamp);
 
-	string contentsHash = SHA256(cstr);
+	// This is string to char array to string!
+	// Can change this to add another HashWrapper that may take in char array
+	// as input
+	string contentsHash = HashWrapper(string(cstr));
 	delete cstr;
 
 	string addedData = previousHash + contentsHash;
-
-	char *hashstr = new char[addedData.length() + 1];
-	strcpy(hashstr, addedData.c_str());
-	hashOfBlock = SHA256(hashstr);
-	delete hashstr;
+	hashOfBlock = HashWrapper(addedData);
 }
 
 string Block::GetHash() {
 	return hashOfBlock;
+}
+
+string Block::GetHashOfFile() {
+	return hashOfFileData;
 }
 
 int Block::GetBlockLength()
@@ -34,12 +34,15 @@ void Block::MineBlock(uint32_t nDifficulty) {
         cstr[i] = '0';
     }
     cstr[nDifficulty] = '\0';
-
     string str(cstr);
+
+    // Calculate Hash of the file data
+    // Can do this here or even in the constructor
+    hashOfFileData = HashWrapper(contents.c_str());
 
 do {
 	nonce++;
-    CalculateHash();
+    CalculateHashOfBlock();
 } while (GetHash().substr(0, nDifficulty) != str);
 
 cout << "Block mined: " << hashOfBlock << endl;

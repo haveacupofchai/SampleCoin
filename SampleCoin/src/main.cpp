@@ -10,10 +10,16 @@ int main() {
 	// Create Blockchain with difficulty 3
     Blockchain bChain = Blockchain(3);
 
-    fstream file;
-    file.open("test.txt", fstream::in);
+    fstream file1;
+    file1.open("test1.txt", fstream::in);
+    bChain.AddBlock(&file1);
+    cout << " Added file 1" << endl;
+    file1.close();
 
-    // TODO: Add graceful failure
-    bChain.AddBlock(&file);
-    file.close();
+    fstream file2;
+    file2.open("test2.txt", fstream::in);
+    bChain.AddBlock(&file2);
+    cout << " Added file 2" << endl;
+    bChain.Exists(&file2);
+    file2.close();
 }

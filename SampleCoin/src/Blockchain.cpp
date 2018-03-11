@@ -19,6 +19,25 @@ Blockchain::~Blockchain() {
 
 }
 
+bool Blockchain::Exists(fstream * _pInfile) {
+
+	if (_pInfile == nullptr) {
+		return false;
+	}
+	string filestr;
+	*_pInfile >> filestr;
+
+        string toCheck = HashWrapper(filestr);
+
+	for (Block currBlock : chain) {
+		if (toCheck == currBlock.GetHashOfFile()) {
+			cout << " File exists" << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Blockchain::AddBlock(fstream * _pInfile)
 {
 	if (_pInfile == nullptr)
@@ -26,11 +45,11 @@ bool Blockchain::AddBlock(fstream * _pInfile)
 		return false;
 	}
 
-    string fileStr;
-    *_pInfile >> fileStr;
+        string fileStr;
+        *_pInfile >> fileStr;
 
 #ifdef DBG
-    std::cout << fileStr << "\n";
+        std::cout << fileStr << "\n";
 #endif
 
 	Block *newBlock = new Block(GetLastBlock().GetHash(), fileStr);
@@ -44,5 +63,5 @@ bool Blockchain::AddBlock(fstream * _pInfile)
 
 Block Blockchain::GetLastBlock() const
 {
-    return chain.back();
+        return chain.back();
 }

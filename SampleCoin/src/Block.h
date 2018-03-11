@@ -1,6 +1,8 @@
 #include "stddef.h"
+#include "utils.h"
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -19,7 +21,8 @@ public:
 		ptm = gmtime ( &rawtime );
 		strftime(timestamp,ts_length,"%c",ptm);
 	}
-	void CalculateHash();
+	void CalculateHashOfBlock();
+        string GetHashOfFile();
 	string GetHash();
 
 	void MineBlock(uint32_t nDifficulty);
@@ -28,10 +31,11 @@ private:
 
 	static const int ts_length = 30;
 	string contents;
-    char timestamp[ts_length];
+        int64_t nonce;
+        char timestamp[ts_length];
 	string hashOfBlock;
-    int64_t nonce;
+	string hashOfFileData;
 
-    int GetBlockLength();
+        int GetBlockLength();
 
 };

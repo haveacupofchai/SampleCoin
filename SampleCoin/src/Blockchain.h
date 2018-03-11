@@ -19,6 +19,7 @@ public:
 	virtual ~Blockchain();
 
     bool AddBlock(fstream* _infile);
+    bool Exists(fstream* _infile);
 
     Block GetLastBlock() const;
 
