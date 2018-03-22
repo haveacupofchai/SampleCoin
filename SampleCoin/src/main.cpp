@@ -22,4 +22,17 @@ int main() {
     cout << " Added file 2" << endl;
     bChain.Exists(&file2);
     file2.close();
+
+    // Eventually this will be moved to the BlockChain, when we separate the Transaction Tree
+    // from the blockchain class
+    StateTree state = StateTree();
+    //Create Accounts
+    state.CreateAccount("aa");
+    state.CreateAccount("ab");
+    // Proof of capture
+    state.RecordCapture("aa","test1.txt");
+    // This will be combined with AddBlock and will store blockHash instead
+    // of the filename
+    state.RecordTransaction("aa","ab","test1.txt");
+    state.RecordTransaction("ab","aa","test1.txt");
 }

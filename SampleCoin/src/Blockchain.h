@@ -6,6 +6,7 @@
  */
 #include <vector>
 #include "Block.h"
+#include "StateTree.h"
 #include <fstream>
 
 #ifndef BLOCKCHAIN_H_
@@ -25,7 +26,10 @@ public:
 
 private:
     uint32_t difficulty;
+    // TODO: Move to Transaction Tree
     vector<Block> chain;
+    // TODO: Move logic from main.cpp
+    StateTree m_state;
 
 };
 
