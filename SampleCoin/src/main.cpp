@@ -5,23 +5,31 @@
 
 using namespace std;
 
+Blockchain bChain = Blockchain(3);
+
+void fileExists(string input) {
+    cout << " File : " << input << " -> ";
+    fstream file;
+    file.open(input, fstream::in);
+    bChain.Exists(&file);
+    file.close();
+    cout << endl;
+}
+
 int main() {
 
-	// Create Blockchain with difficulty 3
-    Blockchain bChain = Blockchain(3);
-
     fstream file1;
-    file1.open("../tempfiles/test1.txt", fstream::in);
+    file1.open("tempfiles/test1.txt", fstream::in);
     bChain.AddBlock(&file1);
-    cout << " Added file 1" << endl;
     file1.close();
 
     fstream file2;
-    file2.open("../tempfiles/test2.txt", fstream::in);
+    file2.open("tempfiles/test2.txt", fstream::in);
     bChain.AddBlock(&file2);
-    cout << " Added file 2" << endl;
-    bChain.Exists(&file2);
     file2.close();
+
+    fileExists("tempfiles/test2.txt");
+    fileExists("tempfiles/test3.txt");
 
     // Eventually this will be moved to the BlockChain, when we separate the Transaction Tree
     // from the blockchain class
