@@ -45,5 +45,5 @@ do {
     CalculateHashOfBlock();
 } while (GetHash().substr(0, nDifficulty) != str);
 
-cout << "Block mined: " << hashOfBlock << endl;
+    cout << "Block mined: " << hashOfBlock << endl;
 }

@@ -16,8 +16,8 @@
 
 class Blockchain {
 public:
-	Blockchain(uint32_t _difficulty);
-	virtual ~Blockchain();
+    Blockchain(uint32_t _difficulty);
+    virtual ~Blockchain();
 
     bool AddBlock(fstream* _infile);
     bool Exists(fstream* _infile);

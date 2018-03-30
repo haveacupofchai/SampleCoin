@@ -11,13 +11,13 @@ int main() {
     Blockchain bChain = Blockchain(3);
 
     fstream file1;
-    file1.open("test1.txt", fstream::in);
+    file1.open("../tempfiles/test1.txt", fstream::in);
     bChain.AddBlock(&file1);
     cout << " Added file 1" << endl;
     file1.close();
 
     fstream file2;
-    file2.open("test2.txt", fstream::in);
+    file2.open("../tempfiles/test2.txt", fstream::in);
     bChain.AddBlock(&file2);
     cout << " Added file 2" << endl;
     bChain.Exists(&file2);
@@ -30,9 +30,9 @@ int main() {
     state.CreateAccount("aa");
     state.CreateAccount("ab");
     // Proof of capture
-    state.RecordCapture("aa","test1.txt");
+    state.RecordCapture("aa","../tempfiles/test1.txt");
     // This will be combined with AddBlock and will store blockHash instead
     // of the filename
-    state.RecordTransaction("aa","ab","test1.txt");
-    state.RecordTransaction("ab","aa","test1.txt");
+    state.RecordTransaction("aa","ab","../tempfiles/test1.txt");
+    state.RecordTransaction("ab","aa","../tempfiles/test1.txt");
 }
