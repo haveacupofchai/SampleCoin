@@ -7,10 +7,13 @@
 
 #include "Blockchain.h"
 
+Blockchain::Blockchain() {
+}
+
 Blockchain::Blockchain(uint32_t _difficulty) {
 	// TODO Auto-generated constructor stub
 	difficulty = _difficulty;
-	Block *firstBlock = new Block("", "First Block");
+	Block *firstBlock = new Block("", "", "", "First Block", GENESIS);
 	firstBlock->MineBlock(difficulty);
 	chain.push_back(*firstBlock);
 }
@@ -38,21 +41,12 @@ bool Blockchain::Exists(fstream * _pInfile) {
 	return false;
 }
 
-bool Blockchain::AddBlock(fstream * _pInfile)
+bool Blockchain::AddBlock(Block* newBlock)
 {
-	if (_pInfile == nullptr)
-	{
+	if (newBlock == nullptr) {
 		return false;
 	}
 
-        string fileStr;
-        *_pInfile >> fileStr;
-
-#ifdef DBG
-        std::cout << fileStr << "\n";
-#endif
-
-	Block *newBlock = new Block(GetLastBlock().GetHash(), fileStr);
 	newBlock->MineBlock(difficulty);
 	chain.push_back(*newBlock);
 
@@ -60,6 +54,14 @@ bool Blockchain::AddBlock(fstream * _pInfile)
 }
 
 
+void Blockchain::DumpBlocks() {
+	for (Block currBlock : chain) {
+		cout << "BLOCK DETAILS: " << endl;
+		cout << "  Opcode : " << currBlock.getOpCode() << endl;
+		cout << "  From : " << currBlock.getUserFrom() << endl;
+		cout << "  To : " << currBlock.getUserTo() << endl;
+	}
+}
 
 Block Blockchain::GetLastBlock() const
 {

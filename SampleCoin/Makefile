@@ -7,7 +7,7 @@ INCLUDES = -I$(INC_DIR)
 # LIBS = -lrt -lm
 
 SRCS = src/BlockChain/Blockchain.cpp src/Block/Block.cpp src/main.cpp \
-       src/StateTree/StateTree.cpp src/utils/utils.cpp
+       src/StateTree/StateTree.cpp src/utils/utils.cpp src/CoreManager/CoreManager.cpp
 OBJS = $(SRCS:.c=.o)
 MAIN = run
 .PHONY: clean

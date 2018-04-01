@@ -16,11 +16,13 @@
 
 class Blockchain {
 public:
+    Blockchain();
     Blockchain(uint32_t _difficulty);
     virtual ~Blockchain();
 
-    bool AddBlock(fstream* _infile);
+    bool AddBlock(Block* newBlock);
     bool Exists(fstream* _infile);
+    void DumpBlocks();
 
     Block GetLastBlock() const;
 

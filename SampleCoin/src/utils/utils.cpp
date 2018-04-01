@@ -8,3 +8,7 @@ string HashWrapper(string data) {
 	delete hashstr;
         return resulthash;
 }
+
+string getId(string const& input) {
+	return input;
+}

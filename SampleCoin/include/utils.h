@@ -9,5 +9,9 @@ using namespace std;
 
 #define CHECKNULL(val)  if (val == NULL) return false;
 
-string HashWrapper(string data);
+#define GENESIS 0
+#define CLICK 1
+#define TRANSFER 2
 
+string HashWrapper(string data);
+string getId(string const& input);

@@ -42,5 +42,3 @@ private:
 	bool UpdateAccounts(Account* fromAccount, Account* toAccount, string fileStr);
 
 };
-
-
