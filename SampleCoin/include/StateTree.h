@@ -13,12 +13,22 @@
 
 #define MAX_AC_LENGTH 26
 
+struct transaction_data
+{
+	int blockNumber;
+	int type;
+	bool from;
+	bool to;
+};
+
 struct Account
 {
 	/// Account's balance.
-    vector<string> m_files;
+	vector<string> m_files;
+	vector<transaction_data> m_transactions;
 };
 
+// Structure of each node in the State Tree
 struct Node
 {
 	int data; // This is to optimize the account tree later.
