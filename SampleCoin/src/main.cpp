@@ -5,7 +5,13 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
+
+	bool isMiner = false;
+	if(argc == 2 && !strcmp(argv[1], "miner"))
+	{
+		isMiner = true;
+	}
 	CoreManager *runner = new CoreManager();
-	runner->Run();
+	runner->Run(isMiner);
 }

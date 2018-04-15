@@ -7,6 +7,8 @@
 CoreManager::CoreManager() {
 	m_chain = Blockchain(3);
 	m_stateTree = StateTree();
+	// TODO: Eventually cloud will send the initial block to all miners
+	m_network = Network(m_chain);
 }
 
 CoreManager::~CoreManager() {
@@ -16,6 +18,7 @@ void CoreManager::Setup() {
 	// Dummy setup
 	m_stateTree.CreateAccount("aa");
 	m_stateTree.CreateAccount("ab");
+	m_network.SetupClient();
 }
 
 Block* CoreManager::createNewBlock(string const& from, string const& to, string file, int opcode) {
@@ -33,7 +36,9 @@ void CoreManager::Click(string const& user, fstream *_pInfile) {
 	*_pInfile >> file;
 	if (m_stateTree.RecordCapture(getId(user), file)) {
 		newBlock = createNewBlock("", user, file, CLICK);
+		// TODO: Change implementation to broadcast transactions so that miners can create the blocks
 		m_chain.AddBlock(newBlock);
+		m_network.Broadcast(newBlock->GetHash());
 	}
 }
 
@@ -48,6 +53,7 @@ void CoreManager::Transfer(string const& from, string const& to, fstream *_pInfi
 	if (m_stateTree.RecordTransaction(getId(from), getId(to), file)) {
 		newBlock = createNewBlock(from, to, file, TRANSFER);
 		m_chain.AddBlock(newBlock);
+		m_network.Broadcast(newBlock->GetHash());
 	}
 }
 
@@ -71,13 +77,21 @@ bool CoreManager::CheckIfFileIsInChain(string input) {
 	return result;
 }
 
-void CoreManager::Run() {
-	Setup();
-	Transaction("", "aa", "tempfiles/test1.txt");
-	CheckIfFileIsInChain("tempfiles/test1.txt");
-	Transaction("", "ab", "tempfiles/test2.txt");
-	CheckIfFileIsInChain("tempfiles/test2.txt");
-	Transaction("aa", "ab", "tempfiles/test1.txt");
-	Transaction("aa", "ab", "tempfiles/test1.txt");
-	m_chain.DumpBlocks();
+void CoreManager::Run(bool _isMiner) {
+
+	if(_isMiner)
+	{
+		m_network.StartListening();
+	}
+	else
+	{
+		Setup();
+		Transaction("", "aa", "tempfiles/test1.txt");
+		CheckIfFileIsInChain("tempfiles/test1.txt");
+		Transaction("", "ab", "tempfiles/test2.txt");
+		CheckIfFileIsInChain("tempfiles/test2.txt");
+		Transaction("aa", "ab", "tempfiles/test1.txt");
+		Transaction("aa", "ab", "tempfiles/test1.txt");
+		m_chain.DumpBlocks();
+	}
 }

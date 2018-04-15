@@ -28,9 +28,7 @@ public:
 
 private:
     uint32_t difficulty;
-    // TODO: Move to Transaction Tree
     vector<Block> chain;
-    // TODO: Move logic from main.cpp
     StateTree m_state;
 
 };

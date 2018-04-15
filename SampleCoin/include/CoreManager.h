@@ -1,14 +1,15 @@
 #include "Blockchain.h"
+#include "Network.h"
 
 #ifndef COREMANAGER_H_
 #define COREMANAGER_H_
 
 class CoreManager {
 public:
-        CoreManager();
-        virtual ~CoreManager();
+    CoreManager();
+    virtual ~CoreManager();
 	void Transaction(string const& from, string const& to, string file);
-	void Run();
+	void Run(bool _isMiner);
 
 private:
 	void Setup();
@@ -19,6 +20,7 @@ private:
 
 	Blockchain m_chain;
 	StateTree m_stateTree;
+	Network m_network;
 };
 
 #endif /* COREMANAGER_H_ */
