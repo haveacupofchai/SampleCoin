@@ -6,9 +6,8 @@ INCLUDES = -I$(INC_DIR)
 # LFLAGS = -L/blah/blah/lib  -L../lib
 # LIBS = -lrt -lm
 
-SRCS = src/BlockChain/Blockchain.cpp src/Block/Block.cpp src/main.cpp \
-       src/StateTree/StateTree.cpp src/Network/Network.cpp src/utils/utils.cpp \
-       src/CoreManager/CoreManager.cpp
+SRCS = src/Node/NodeCore.cpp src/Client/ClientNode.cpp src/Client/Client.cpp src/Client/CaptureClient.cpp src/main.cpp \
+       src/utils/utils.cpp
 OBJS = $(SRCS:.c=.o)
 MAIN = run
 .PHONY: clean

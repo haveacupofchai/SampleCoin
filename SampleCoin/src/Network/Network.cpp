@@ -1,8 +1,7 @@
 #include "Network.h"
 
-Network::Network(Blockchain chain)
+Network::Network()
 {
-	m_chain = chain;
 }
 
 bool Network::Setup()

@@ -10,7 +10,6 @@
 #include <sys/socket.h>
 #include <pthread.h>
 #include <unistd.h>
-#include <Blockchain.h>
 
 using namespace std;
 
@@ -22,7 +21,7 @@ class Network
 
 	public:
 
-	Network(Blockchain chain);
+	Network();
 
 	bool Broadcast(string hashOfFile);
 	bool StartListening();
@@ -37,5 +36,4 @@ class Network
 	std::thread m_listenThread;
 	sockaddr_un m_address;
 	int m_socket;
-	Blockchain m_chain;
 };
